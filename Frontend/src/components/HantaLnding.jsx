@@ -67,17 +67,17 @@ const HantaLanding = () => {
     {
       name: 'Paul Icel Idiama',
       role: 'CEO & Founder',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face'
+      image: 'https://thumbs.dreamstime.com/b/art-black-white-cartoon-handsome-man-hat-black-white-cartoon-handsome-man-hat-362237757.jpg'
     },
     {
-      name: 'Junior Kimathi',
-      role: 'Head of Operations',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face'
+      name: 'Kennedy Kimathi',
+      role: 'Co-founder',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuaYemjpgeARyxBwqgT53bi9BGp-EoBTJhRg&s'
     },
     {
       name: 'Uvyne Rop',
-      role: 'Product Manager',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face'
+      role: 'developer',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLWMk6VcQwgUjvvltNvZD9OtAeCquVGgj33A&s'
     },
     
   ];
@@ -365,8 +365,8 @@ const HantaLanding = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900 mb-1">Office Location</h3>
-                  <p className="text-gray-600">124 Tech Boulevard, Suite 400</p>
-                  <p className="text-gray-600">Innovation District, CA 90210</p>
+                  <p className="text-gray-600">Moi avenue</p>
+                  <p className="text-gray-600">Nairobi county</p>
                 </div>
               </div>
               
@@ -387,7 +387,7 @@ const HantaLanding = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-gray-900 mb-1">Call Us</h3>
-                  <p className="text-gray-600">+1 (555) 123-4567</p>
+                  <p className="text-gray-600">+254 712345678</p>
                   <p className="text-gray-600">Mon-Fri, 9am - 6pm EST</p>
                 </div>
               </div>
