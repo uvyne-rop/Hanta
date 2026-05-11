@@ -176,8 +176,14 @@ const HantaLanding = () => {
 
             <div className="hidden md:block">
               <button className="bg-purple-700 hover:bg-purple-800 text-white px-6 py-2.5 rounded-lg font-medium transition-colors">
-                Download App
+                <a href="/hanta-apk.apk" download>
+                  Download App
+                </a>
               </button>
+
+              
+
+              
             </div>
 
             <button
