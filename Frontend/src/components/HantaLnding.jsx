@@ -24,7 +24,7 @@ import kennedyImage from '../assets/kimathi.jpeg';
 import uvyneImage from '../assets/uvyne.jpg';
 
 const HantaLanding = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   // Contact form state
   const [formData, setFormData] = useState({
@@ -34,6 +34,71 @@ const HantaLanding = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+
+  //Download logic state
+  const [downloadProgress, setDownloadProgress] = useState(0);
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownload = async () => {
+  try {
+    setIsDownloading(true);
+    setDownloadProgress(0);
+
+    const response = await fetch('/hanta-apk.apk');
+
+    if (!response.ok) {
+      throw new Error('Download failed');
+    }
+
+    const contentLength = response.headers.get('content-length');
+
+    if (!contentLength) {
+      throw new Error('Content-Length header missing');
+    }
+
+    const total = parseInt(contentLength, 10);
+    let loaded = 0;
+
+    const reader = response.body.getReader();
+    const chunks = [];
+
+    while (true) {
+      const { done, value } = await reader.read();
+
+      if (done) break;
+
+      chunks.push(value);
+      loaded += value.length;
+
+      const percent = Math.round((loaded / total) * 100);
+      setDownloadProgress(percent);
+    }
+
+    const blob = new Blob(chunks, {
+      type: 'application/vnd.android.package-archive',
+    });
+
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'hanta.apk';
+
+    document.body.appendChild(a);
+    a.click();
+
+    a.remove();
+    window.URL.revokeObjectURL(url);
+
+  } catch (error) {
+    console.error(error);
+    alert('Download failed');
+  } finally {
+    setIsDownloading(false);
+  }
+};
+
+
 
   const navLinks = [
     { name: 'Home', href: '#home' },
@@ -175,13 +240,11 @@ const HantaLanding = () => {
             </div>
 
             <div className="hidden md:block">
-              <button className="bg-purple-700 hover:bg-purple-800 text-white px-6 py-2.5 rounded-lg font-medium transition-colors">
+              <button onClick={handleDownload} className="bg-purple-700 hover:bg-purple-800 text-white px-6 py-2.5 rounded-lg font-medium transition-colors">
                 <a href="/hanta.apk" download>
                   Download App
                 </a>
               </button>
-
-              
 
               
             </div>
@@ -215,8 +278,23 @@ const HantaLanding = () => {
               <button className="w-full bg-purple-700 text-white px-6 py-3 rounded-lg font-medium mt-4">
                 Download App
               </button>
-            </div>
-          </div>
+
+              {isDownloading && (
+                <div className="mt-4 w-full max-w-sm">
+                  <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                      <div
+                        className="bg-purple-700 h-3 transition-all duration-300"
+                        style={{ width: `${downloadProgress}%` }}
+                        />
+                        </div>
+
+                    <p className="text-sm text-gray-600 mt-2">
+                      Downloading... {downloadProgress}%
+                    </p>
+                  </div>
+                  )}
+                </div>
+        </div>
         )}
       </nav>
 
@@ -349,7 +427,7 @@ const HantaLanding = () => {
           
           <div className="grid md:grid-cols-3 gap-8">
             {steps.map((step, index) => (
-              <div key={index} className="text-center">
+              <div key={index} className="text-center w-full max-w-xs">
                 <div className="w-16 h-16 bg-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl font-bold text-white">{step.number}</span>
                 </div>
@@ -377,7 +455,8 @@ const HantaLanding = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center max-w-5xl mx-auto">
             {team.map((member, index) => (
               <div key={index} className="text-center">
                 <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-300">
@@ -492,7 +571,7 @@ const HantaLanding = () => {
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                   <p className="text-red-800 text-sm">
                     Failed to send. Please email Hanta directly at{' '}
-                    <a href="mailto:icelpaul90@gmail.com@gmail.com" className="underline font-medium">
+                    <a href="mailto:icelpaul90@gmail.com" className="underline font-medium">
                       icelpaul90@gmail.com
                     </a>
                   </p>
